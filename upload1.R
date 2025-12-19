@@ -16,10 +16,10 @@ cellMarker <- lapply(type, function(x){
   unique(dd)
 })
 
-save(cellMarker,file = "cellmarker_ssGSEA.Rdata")#保存中间文件
+save(cellMarker,file = "cellmarker_ssGSEA.Rdata")
 
 ##1.3 
-expr <- data.table::fread("gene_fpkm.txt",data.table = F) #读取表达文件
+expr <- data.table::fread("gene_fpkm.txt",data.table = F) 
 
 expr = expr %>% distinct(ID,.keep_all = T) %>% as.tibble() %>%
   column_to_rownames(var = "ID") 
@@ -126,7 +126,7 @@ library(dplyr)
 library(tidyverse)
 data_oplsda_3d <- opls(t(data), Group, predI = 1, orthoI = 2)
 
-oplsda_scores_3d = cbind(data_oplsda_3d@scoreMN, data_oplsda_3d@orthoScoreMN)#得分矩阵
+oplsda_scores_3d = cbind(data_oplsda_3d@scoreMN, data_oplsda_3d@orthoScoreMN)
 identical(rownames(oplsda_scores_3d),data_group$Sample )
 oplsda_scores_3d<-as.data.frame(oplsda_scores_3d)
 oplsda_scores_3d$group <- data_group$Group2 
@@ -155,7 +155,7 @@ y <- gsub("(.*)\\-(.*)\\-(.*)", "\\3", row.names(dat))
 
 dat<-data.table::fread("surv_sig_meta_diff.csv", data.table = F,header = T)
 x <- as.matrix(dat[,-c(1:3)])
-y <- ifelse(dat$status == "0", 0,1)#把分组信息换成0或1
+y <- ifelse(dat$status == "0", 0,1)
 
 fit=glmnet(x, y, family = "binomial", alpha=1)
 plot(fit, xvar = "lambda", label = TRUE)
